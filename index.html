@@ -3,23 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <title>SRA-Seg: Synthetic to Real Alignment for Semi-Supervised Medical Image Segmentation</title>
     <meta name="description" content="SRA-Seg is a framework explicitly designed to align synthetic and real feature distributions for medical image segmentation.">
     <meta name="keywords" content="medical image segmentation, semi-supervised learning, synthetic data, domain adaptation, deep learning">
-    
+    <meta name="author" content="OFM Riaz Rahman Aranya, Kevin Desai">
+    <link rel="canonical" href="https://utsa-virlab.github.io/SRA-Seg/">
+
     <!-- Open Graph / Social Media -->
     <meta property="og:title" content="SRA-Seg: Synthetic to Real Alignment for Semi-Supervised Medical Image Segmentation">
     <meta property="og:description" content="Using only 10% labeled real data and 90% synthetic data, SRA-Seg achieves 89.34% Dice on ACDC and 84.42% on FIVES.">
-    <meta property="og:image" content="figures/overview.png">
+    <meta property="og:image" content="https://utsa-virlab.github.io/SRA-Seg/figures/Fig-SA-BCP.png">
+    <meta property="og:url" content="https://utsa-virlab.github.io/SRA-Seg/">
     <meta property="og:type" content="website">
-    
+    <meta name="twitter:card" content="summary_large_image">
+
     <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <style>
         :root {
             --primary-color: #0c4a6e;
@@ -33,13 +39,13 @@
             --success-color: #10b981;
             --max-width: 950px;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             color: var(--text-color);
@@ -47,19 +53,23 @@
             line-height: 1.7;
             font-size: 16px;
         }
-        
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
         .container {
             max-width: var(--max-width);
             margin: 0 auto;
             padding: 0 24px;
         }
-        
+
         /* Header */
         .hero {
             text-align: center;
             padding: 60px 0 40px;
         }
-        
+
         .venue {
             display: inline-block;
             background: var(--primary-color);
@@ -70,7 +80,7 @@
             font-weight: 500;
             margin-bottom: 24px;
         }
-        
+
         .paper-title {
             font-size: 2.2rem;
             font-weight: 700;
@@ -78,7 +88,7 @@
             margin-bottom: 24px;
             color: var(--text-color);
         }
-        
+
         /* Authors */
         .authors {
             display: flex;
@@ -87,26 +97,26 @@
             gap: 8px 32px;
             margin-bottom: 16px;
         }
-        
+
         .author {
             font-size: 1.1rem;
         }
-        
+
         .author a {
             color: var(--primary-color);
             text-decoration: none;
         }
-        
+
         .author a:hover {
             text-decoration: underline;
         }
-        
+
         .affiliations {
             color: var(--text-light);
             font-size: 0.95rem;
             margin-bottom: 8px;
         }
-        
+
         /* Links/Buttons */
         .links {
             display: flex;
@@ -115,7 +125,7 @@
             gap: 12px;
             margin-top: 32px;
         }
-        
+
         .btn {
             display: inline-flex;
             align-items: center;
@@ -127,39 +137,40 @@
             text-decoration: none;
             transition: all 0.2s;
         }
-        
+
         .btn-primary {
             background: var(--primary-color);
             color: white;
         }
-        
+
         .btn-primary:hover {
             background: var(--primary-hover);
         }
-        
+
         .btn-secondary {
             background: var(--bg-secondary);
             color: var(--text-color);
             border: 1px solid var(--border-color);
         }
-        
+
         .btn-secondary:hover {
             background: var(--border-color);
         }
-        
+
         /* Teaser */
         .teaser {
             margin: 40px 0;
             text-align: center;
         }
-        
+
         .teaser img,
         .teaser video {
             max-width: 100%;
             border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            cursor: zoom-in;
         }
-        
+
         .teaser-caption {
             margin-top: 16px;
             color: var(--text-light);
@@ -168,27 +179,27 @@
             margin-left: auto;
             margin-right: auto;
         }
-        
+
         /* Sections */
         .section {
             padding: 48px 0;
             border-top: 1px solid var(--border-color);
         }
-        
+
         .section-title {
             font-size: 1.75rem;
             font-weight: 600;
             margin-bottom: 24px;
             color: var(--text-color);
         }
-        
+
         /* Abstract */
         .abstract {
             font-size: 1.05rem;
             color: var(--text-color);
             text-align: justify;
         }
-        
+
         /* Highlights */
         .highlights {
             display: grid;
@@ -196,26 +207,26 @@
             gap: 20px;
             margin: 32px 0;
         }
-        
+
         .highlight-card {
             background: var(--bg-secondary);
             padding: 24px;
             border-radius: 12px;
             text-align: center;
         }
-        
+
         .highlight-value {
             font-size: 2.5rem;
             font-weight: 700;
             color: var(--primary-color);
         }
-        
+
         .highlight-label {
             color: var(--text-light);
             font-size: 0.9rem;
             margin-top: 4px;
         }
-        
+
         /* Contributions */
         .contributions {
             background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
@@ -223,102 +234,158 @@
             padding: 24px;
             margin: 24px 0;
         }
-        
+
         .contributions h3 {
             font-size: 1.1rem;
             margin-bottom: 16px;
             color: var(--primary-color);
         }
-        
+
         .contributions ul {
             list-style: none;
             padding: 0;
         }
-        
+
         .contributions li {
             padding: 8px 0;
             padding-left: 28px;
             position: relative;
         }
-        
+
         .contributions li::before {
-            content: "✓";
+            content: "\2713";
             position: absolute;
             left: 0;
             color: var(--success-color);
             font-weight: bold;
         }
-        
+
         /* Figures */
         .figure {
             margin: 32px 0;
             text-align: center;
         }
-        
+
         .figure img {
             max-width: 100%;
             border-radius: 8px;
-            cursor: pointer;
+            cursor: zoom-in;
             transition: transform 0.2s;
         }
-        
+
         .figure img:hover {
             transform: scale(1.01);
         }
-        
+
         .figure-caption {
             margin-top: 12px;
             color: var(--text-light);
             font-size: 0.9rem;
         }
-        
+
+        /* KDE grid: four across on desktop, two on narrow screens */
+        .kde-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .kde-grid .figure {
+            margin: 0;
+        }
+
         /* Tables */
         .table-wrapper {
             overflow-x: auto;
             margin: 24px 0;
+            -webkit-overflow-scrolling: touch;
         }
-        
+
         .results-table {
             width: 100%;
             border-collapse: collapse;
             font-size: 0.9rem;
         }
-        
+
         .results-table th,
         .results-table td {
-            padding: 12px 14px;
+            padding: 10px 12px;
             text-align: left;
             border-bottom: 1px solid var(--border-color);
         }
-        
+
         .results-table th {
             background: var(--bg-secondary);
             font-weight: 600;
             white-space: nowrap;
         }
-        
-        .results-table tr:hover {
+
+        .results-table td + td,
+        .results-table th + th {
+            text-align: center;
+        }
+
+        .results-table tbody tr:hover {
             background: var(--bg-secondary);
         }
-        
-        .highlight-row {
-            background: #ecfdf5 !important;
+
+        /* Split banner rows (5% / 10% labeled) */
+        .split-row td {
+            background: #f0f9ff;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--primary-color);
+            text-align: left !important;
+        }
+
+        .split-row:hover td {
+            background: #f0f9ff;
+        }
+
+        .highlight-row td {
+            background: #ecfdf5;
             font-weight: 500;
         }
-        
-        .highlight-row:hover {
-            background: #d1fae5 !important;
+
+        .highlight-row:hover td {
+            background: #d1fae5;
         }
-        
+
         .best {
             font-weight: 700;
             color: var(--primary-color);
         }
-        
+
         .second-best {
             text-decoration: underline;
         }
-        
+
+        .table-legend {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            margin-top: -12px;
+            margin-bottom: 24px;
+        }
+
+        /* Qualitative result thumbnails */
+        .results-table.qual-table th,
+        .results-table.qual-table td {
+            text-align: center;
+            padding: 6px;
+        }
+
+        img.qual {
+            width: 60px;
+            height: auto;
+            border-radius: 4px;
+            cursor: zoom-in;
+            display: block;
+            margin: 0 auto;
+        }
+
         /* Method steps */
         .method-grid {
             display: grid;
@@ -326,25 +393,25 @@
             gap: 24px;
             margin: 24px 0;
         }
-        
+
         .method-card {
             background: var(--bg-secondary);
             padding: 24px;
             border-radius: 12px;
             border-left: 4px solid var(--primary-color);
         }
-        
+
         .method-card h4 {
             color: var(--primary-color);
             margin-bottom: 12px;
             font-size: 1rem;
         }
-        
+
         .method-card p {
             color: var(--text-light);
             font-size: 0.9rem;
         }
-        
+
         /* BibTeX */
         .bibtex-container {
             position: relative;
@@ -353,7 +420,7 @@
             padding: 20px;
             margin-top: 16px;
         }
-        
+
         .bibtex-container pre {
             font-family: 'Monaco', 'Menlo', monospace;
             font-size: 12px;
@@ -363,7 +430,7 @@
             margin: 0;
             color: var(--text-color);
         }
-        
+
         .copy-btn {
             position: absolute;
             top: 12px;
@@ -377,15 +444,15 @@
             cursor: pointer;
             transition: background 0.2s;
         }
-        
+
         .copy-btn:hover {
             background: var(--primary-hover);
         }
-        
+
         .copy-btn.copied {
             background: var(--success-color);
         }
-        
+
         /* Footer */
         .footer {
             text-align: center;
@@ -394,16 +461,16 @@
             font-size: 0.85rem;
             border-top: 1px solid var(--border-color);
         }
-        
+
         .footer a {
             color: var(--primary-color);
             text-decoration: none;
         }
-        
+
         .footer a:hover {
             text-decoration: underline;
         }
-        
+
         /* Back link */
         .back-link {
             display: inline-flex;
@@ -414,63 +481,72 @@
             font-size: 0.9rem;
             margin-bottom: 20px;
         }
-        
+
         .back-link:hover {
             color: var(--primary-color);
         }
-        
+
         /* Responsive */
         @media (max-width: 768px) {
             .paper-title {
                 font-size: 1.6rem;
             }
-            
+
             .authors {
                 gap: 4px 16px;
             }
-            
+
             .author {
                 font-size: 1rem;
             }
-            
+
             .links {
                 flex-direction: column;
                 align-items: center;
             }
-            
+
             .btn {
                 width: 100%;
                 max-width: 280px;
                 justify-content: center;
             }
-            
+
             .highlight-value {
                 font-size: 2rem;
             }
-            
+
+            .kde-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
             .results-table {
                 font-size: 0.8rem;
             }
-            
+
             .results-table th,
             .results-table td {
                 padding: 8px 10px;
             }
+
+            img.qual {
+                width: 48px;
+            }
         }
-        
+
         /* Image Modal */
         .modal {
             display: none;
             position: fixed;
             z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             background: rgba(0, 0, 0, 0.9);
-            cursor: pointer;
+            cursor: zoom-out;
         }
-        
+
+        .modal.open {
+            display: block;
+        }
+
         .modal img {
             max-width: 90%;
             max-height: 90%;
@@ -480,20 +556,24 @@
             transform: translate(-50%, -50%);
             border-radius: 8px;
         }
-        
+
         .modal-close {
             position: absolute;
             top: 20px;
             right: 30px;
             color: white;
             font-size: 40px;
+            line-height: 1;
+            background: none;
+            border: none;
             cursor: pointer;
+            z-index: 1001;
         }
-        
+
         /* Checkmark */
-        .check { color: var(--success-color); }
-        .cross { color: #ef4444; }
-        
+        .check { color: var(--success-color); font-weight: 700; }
+        .cross { color: #ef4444; font-weight: 700; }
+
         /* Subsection */
         .subsection-title {
             font-size: 1.25rem;
@@ -501,58 +581,62 @@
             margin: 32px 0 16px;
             color: var(--text-color);
         }
+
+        @media (prefers-reduced-motion: reduce) {
+            * { transition: none !important; }
+            .figure img:hover { transform: none; }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <!-- Back to Lab Website -->
         <a href="https://utsa-virlab.github.io/research/" class="back-link">
-            <i class="fas fa-arrow-left"></i> Back to VIRLab Research
+            <i class="fas fa-arrow-left" aria-hidden="true"></i> Back to VIRLab Research
         </a>
-        
+
         <!-- Hero Section -->
         <section class="hero">
-            <!-- TODO: Update venue when published -->
-            <span class="venue">Under Review</span>
-            
+            <span class="venue">ICPR 2026</span>
+
             <h1 class="paper-title">SRA-Seg: Synthetic to Real Alignment for Semi-Supervised Medical Image Segmentation</h1>
-            
+
             <div class="authors">
                 <span class="author">
-                    <a href="https://orcid.org/0000-0002-8195-2710" target="_blank">OFM Riaz Rahman Aranya</a>
+                    <a href="https://orcid.org/0000-0002-8195-2710" target="_blank" rel="noopener">OFM Riaz Rahman Aranya</a>
                 </span>
                 <span class="author">
-                    <a href="https://kevindesai.info" target="_blank">Kevin Desai</a>
+                    <a href="https://kevindesai.info" target="_blank" rel="noopener">Kevin Desai</a>
                 </span>
             </div>
-            
+
             <div class="affiliations">
-                University of Texas at San Antonio
+                The University of Texas at San Antonio
             </div>
-            
+
             <!-- Links -->
             <div class="links">
-                <a href="#" class="btn btn-primary" target="_blank">
-                    <i class="fas fa-file-pdf"></i> Paper
+                <a href="https://link.springer.com/chapter/10.1007/978-3-032-31335-5_47" class="btn btn-primary" target="_blank" rel="noopener">
+                    <i class="fas fa-book-open" aria-hidden="true"></i> Paper (Springer)
                 </a>
-                <a href="#" class="btn btn-secondary" target="_blank">
-                    <i class="fas fa-file-alt"></i> arXiv
+                <a href="https://arxiv.org/abs/2602.02944" class="btn btn-secondary" target="_blank" rel="noopener">
+                    <i class="fas fa-file-lines" aria-hidden="true"></i> arXiv
                 </a>
-                <a href="https://github.com/UTSA-VIRLab/SRA-Seg" class="btn btn-secondary" target="_blank">
-                    <i class="fab fa-github"></i> Code
+                <a href="https://github.com/UTSA-VIRLab/SRA-Seg" class="btn btn-secondary" target="_blank" rel="noopener">
+                    <i class="fab fa-github" aria-hidden="true"></i> Code
                 </a>
             </div>
         </section>
-        
+
         <!-- Key Results Highlights -->
         <div class="highlights">
             <div class="highlight-card">
                 <div class="highlight-value">89.34%</div>
-                <div class="highlight-label">Dice on ACDC</div>
+                <div class="highlight-label">Dice on ACDC (10% labeled)</div>
             </div>
             <div class="highlight-card">
                 <div class="highlight-value">84.42%</div>
-                <div class="highlight-label">Dice on FIVES</div>
+                <div class="highlight-label">Dice on FIVES (10% labeled)</div>
             </div>
             <div class="highlight-card">
                 <div class="highlight-value">10%</div>
@@ -563,37 +647,37 @@
                 <div class="highlight-label">Synthetic Data</div>
             </div>
         </div>
-        
+
         <!-- Teaser - Overview Figure -->
         <section class="teaser">
-            <img src="figures/Fig-SA-BCP.png" alt="SRA-Seg Overview" onclick="openModal(this)">
+            <img src="figures/Fig-SA-BCP.png" alt="Overview of the SRA-Seg framework" onclick="openModal(this)">
             <p class="teaser-caption">
-                <strong>Figure:</strong> Overview of the proposed SRA-Seg method. The framework integrates synthetic images 
-                generated by StyleGAN2-ADA with real labeled data through soft-mix augmentation, EMA-based pseudo-labeling, 
+                <strong>Figure:</strong> Overview of the proposed SRA-Seg method. The framework integrates synthetic images
+                generated by StyleGAN2-ADA with real labeled data through soft-mix augmentation, EMA-based pseudo-labeling,
                 and similarity-alignment loss using frozen DINOv2 embeddings.
             </p>
         </section>
-        
+
         <!-- Abstract -->
         <section class="section">
             <h2 class="section-title">Abstract</h2>
             <p class="abstract">
-                Synthetic data, an appealing alternative to extensive expert-annotated data for medical image segmentation, 
-                consistently fails to improve segmentation performance despite its visual realism. The reason being that 
-                synthetic and real medical images exist in different semantic feature spaces, creating a domain gap that 
-                current semi-supervised learning methods cannot bridge. We propose <strong>SRA-Seg</strong>, a framework 
-                explicitly designed to align synthetic and real feature distributions for medical image segmentation. 
-                SRA-Seg introduces a <strong>similarity-alignment (SA) loss</strong> using frozen DINOv2 embeddings to pull 
-                synthetic representations toward their nearest real counterparts in semantic space. We employ 
-                <strong>soft edge blending</strong> to create smooth anatomical transitions and continuous labels, 
-                eliminating the hard boundaries from traditional copy-paste augmentation. The framework generates 
-                pseudo-labels for synthetic images via an <strong>EMA teacher model</strong> and applies soft-segmentation 
-                losses that respect uncertainty in mixed regions. Our experiments demonstrate strong results: using only 
-                10% labeled real data and 90% synthetic unlabeled data, SRA-Seg achieves <strong>89.34% Dice on ACDC</strong> 
-                and <strong>84.42% on FIVES</strong>, significantly outperforming existing semi-supervised methods and 
+                Synthetic data, an appealing alternative to extensive expert-annotated data for medical image segmentation,
+                consistently fails to improve segmentation performance despite its visual realism. The reason being that
+                synthetic and real medical images exist in different semantic feature spaces, creating a domain gap that
+                current semi-supervised learning methods cannot bridge. We propose <strong>SRA-Seg</strong>, a framework
+                explicitly designed to align synthetic and real feature distributions for medical image segmentation.
+                SRA-Seg introduces a <strong>similarity-alignment (SA) loss</strong> using frozen DINOv2 embeddings to pull
+                synthetic representations toward their nearest real counterparts in semantic space. We employ
+                <strong>soft edge blending</strong> to create smooth anatomical transitions and continuous labels,
+                eliminating the hard boundaries from traditional copy-paste augmentation. The framework generates
+                pseudo-labels for synthetic images via an <strong>EMA teacher model</strong> and applies soft-segmentation
+                losses that respect uncertainty in mixed regions. Our experiments demonstrate strong results: using only
+                10% labeled real data and 90% synthetic unlabeled data, SRA-Seg achieves <strong>89.34% Dice on ACDC</strong>
+                and <strong>84.42% on FIVES</strong>, significantly outperforming existing semi-supervised methods and
                 matching the performance of methods using real unlabeled data.
             </p>
-            
+
             <!-- Contributions -->
             <div class="contributions">
                 <h3>Key Contributions</h3>
@@ -604,504 +688,542 @@
                 </ul>
             </div>
         </section>
-        
+
         <!-- Method -->
         <section class="section">
             <h2 class="section-title">Method</h2>
-            
+
             <div class="method-grid">
                 <div class="method-card">
-                    <h4><i class="fas fa-images"></i> Synthetic Data Generation</h4>
+                    <h4><i class="fas fa-images" aria-hidden="true"></i> Synthetic Data Generation</h4>
                     <p>High-fidelity synthetic images are generated using StyleGAN2-ADA trained on limited real labeled data (5% or 10%).</p>
                 </div>
                 <div class="method-card">
-                    <h4><i class="fas fa-random"></i> Soft-Mix Augmentation</h4>
+                    <h4><i class="fas fa-random" aria-hidden="true"></i> Soft-Mix Augmentation</h4>
                     <p>Bidirectional patch exchange with soft edge blending creates smooth anatomical transitions, avoiding sharp boundaries.</p>
                 </div>
                 <div class="method-card">
-                    <h4><i class="fas fa-compress-arrows-alt"></i> Similarity-Alignment Loss</h4>
+                    <h4><i class="fas fa-compress-arrows-alt" aria-hidden="true"></i> Similarity-Alignment Loss</h4>
                     <p>SA loss using frozen DINOv2 embeddings pulls synthetic features toward their nearest real counterparts in semantic space.</p>
                 </div>
                 <div class="method-card">
-                    <h4><i class="fas fa-layer-group"></i> Soft-Segmentation Loss</h4>
+                    <h4><i class="fas fa-layer-group" aria-hidden="true"></i> Soft-Segmentation Loss</h4>
                     <p>Soft Dice and Cross-Entropy losses computed directly on continuous probability maps, respecting uncertainty in mixed regions.</p>
                 </div>
             </div>
-            
+
             <!-- Synthetic Data Samples Figure -->
             <div class="figure">
-                <img src="figures/combined-syn.png" alt="Synthetic Data Samples" onclick="openModal(this)">
+                <img src="figures/combined-syn.png" alt="Synthetic images generated by StyleGAN2-ADA for the ACDC and FIVES datasets" onclick="openModal(this)">
                 <p class="figure-caption">
-                    <strong>Figure:</strong> Synthetic data generated by StyleGAN2-ADA for ACDC (top) and FIVES (bottom) datasets. 
+                    <strong>Figure:</strong> Synthetic data generated by StyleGAN2-ADA for ACDC (top) and FIVES (bottom) datasets.
                     Left to right: first 3 are original images, next 3 generated using 5% real data, last 3 using 10% real data.
                 </p>
             </div>
-            
+
             <!-- Domain Gap Figure - KDE -->
             <h3 class="subsection-title">Domain Gap Visualization</h3>
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 24px 0;">
-                <div class="figure" style="margin: 0;">
-                    <img src="figures/kde/unet_real_kde.png" alt="UNet Real" onclick="openModal(this)">
+            <div class="kde-grid">
+                <div class="figure">
+                    <img src="figures/kde/unet_real_kde.png" alt="KDE plot for UNet with real unlabeled data" onclick="openModal(this)">
                     <p class="figure-caption">(a) UNet + Real Unlabeled</p>
                 </div>
-                <div class="figure" style="margin: 0;">
-                    <img src="figures/kde/unet_synthetic_kde.png" alt="UNet Synthetic" onclick="openModal(this)">
+                <div class="figure">
+                    <img src="figures/kde/unet_synthetic_kde.png" alt="KDE plot for UNet with synthetic unlabeled data" onclick="openModal(this)">
                     <p class="figure-caption">(b) UNet + Synthetic</p>
                 </div>
-                <div class="figure" style="margin: 0;">
-                    <img src="figures/kde/bcp_syn_2.png" alt="BCP Synthetic" onclick="openModal(this)">
+                <div class="figure">
+                    <img src="figures/kde/bcp_syn_2.png" alt="KDE plot for BCP with synthetic unlabeled data" onclick="openModal(this)">
                     <p class="figure-caption">(c) BCP + Synthetic</p>
                 </div>
-                <div class="figure" style="margin: 0;">
-                    <img src="figures/kde/SA-BCP_kde.png" alt="SRA-Seg" onclick="openModal(this)">
+                <div class="figure">
+                    <img src="figures/kde/SA-BCP_kde.png" alt="KDE plot for SRA-Seg showing aligned distributions" onclick="openModal(this)">
                     <p class="figure-caption">(d) SRA-Seg (Ours)</p>
                 </div>
             </div>
-            <p class="figure-caption" style="text-align: center; margin-top: -8px;">
-                <strong>Figure:</strong> KDE plots showing domain mismatch between labeled (green) and unlabeled (blue) data. 
+            <p class="figure-caption" style="text-align: center;">
+                <strong>Figure:</strong> KDE plots showing domain mismatch between labeled (green) and unlabeled (blue) data.
                 Our method (d) effectively aligns the distributions.
             </p>
-            
+
             <!-- Soft Edge Blending Figure -->
             <div class="figure">
-                <img src="figures/SA-BCP-comp.png" alt="Soft Edge Blending" onclick="openModal(this)">
+                <img src="figures/SA-BCP-comp.png" alt="Soft edge blending component of SRA-Seg" onclick="openModal(this)">
                 <p class="figure-caption">
-                    <strong>Figure:</strong> Soft Edge Blending component of SRA-Seg. The labeled and unlabeled images as well as 
+                    <strong>Figure:</strong> Soft Edge Blending component of SRA-Seg. The labeled and unlabeled images as well as
                     the corresponding segmentation masks are mixed through cropping and soft mask blending to reduce sharp edges.
                 </p>
             </div>
         </section>
-        
+
         <!-- Results -->
         <section class="section">
             <h2 class="section-title">Results</h2>
-            
+
             <!-- ACDC Results -->
             <h3 class="subsection-title">ACDC Dataset (Cardiac MRI)</h3>
             <div class="table-wrapper">
                 <table class="results-table">
                     <thead>
                         <tr>
-                            <th>Method</th>
-                            <th>Labeled</th>
-                            <th>Real Unlabeled</th>
-                            <th>Synthetic</th>
-                            <th>DICE ↑</th>
-                            <th>Jaccard ↑</th>
-                            <th>95HD ↓</th>
-                            <th>ASD ↓</th>
+                            <th scope="col">Method</th>
+                            <th scope="col">Labeled</th>
+                            <th scope="col">Real Unlabeled</th>
+                            <th scope="col">Synthetic</th>
+                            <th scope="col">DICE &uarr;</th>
+                            <th scope="col">Jaccard &uarr;</th>
+                            <th scope="col">95HD &darr;</th>
+                            <th scope="col">ASD &darr;</th>
                         </tr>
                     </thead>
                     <tbody>
+                        <tr class="split-row"><td colspan="8">5% labeled</td></tr>
                         <tr>
-                            <td>UNet</td>
-                            <td>136</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>79.41</td>
-                            <td>68.11</td>
-                            <td>9.35</td>
-                            <td>2.70</td>
+                            <td>UNet</td><td>68</td><td>0</td><td>0</td>
+                            <td>47.83</td><td>37.01</td><td>31.16</td><td>12.62</td>
                         </tr>
                         <tr>
-                            <td>BCP (CVPR'23)</td>
-                            <td>136 (10%)</td>
-                            <td>1176 (90%)</td>
-                            <td>0</td>
-                            <td>88.84</td>
-                            <td>80.62</td>
-                            <td>3.98</td>
-                            <td>1.17</td>
+                            <td>BCP (CVPR'23)</td><td>68 (5%)</td><td>1244 (95%)</td><td>0</td>
+                            <td>87.59</td><td>78.67</td><td>1.90</td><td>0.67</td>
                         </tr>
                         <tr>
-                            <td>BCP (CVPR'23)</td>
-                            <td>136 (10%)</td>
-                            <td>0</td>
-                            <td>1176 (90%)</td>
-                            <td>87.46</td>
-                            <td>78.53</td>
-                            <td>5.30</td>
-                            <td>1.62</td>
+                            <td>SRA-Seg (Ours)</td><td>68 (5%)</td><td>1244 (95%)</td><td>0</td>
+                            <td>87.62</td><td>78.68</td><td>2.01</td><td>0.64</td>
                         </tr>
                         <tr>
-                            <td>CrossMatch (JBHI'25)</td>
-                            <td>136 (10%)</td>
-                            <td>0</td>
-                            <td>1176 (90%)</td>
-                            <td>85.26</td>
-                            <td>76.28</td>
-                            <td>3.72</td>
-                            <td>1.00</td>
+                            <td>BCP (CVPR'23)</td><td>68 (5%)</td><td>0</td><td>1244 (95%)</td>
+                            <td>54.64</td><td>41.20</td><td class="second-best">15.78</td><td class="second-best">4.83</td>
                         </tr>
                         <tr>
-                            <td>ABD(BCP) (CVPR'24)</td>
-                            <td>136 (10%)</td>
-                            <td>0</td>
-                            <td>1176 (90%)</td>
-                            <td>87.03</td>
-                            <td>77.88</td>
-                            <td>3.19</td>
-                            <td class="best">0.85</td>
+                            <td>CrossMatch (JBHI'25)</td><td>68 (5%)</td><td>0</td><td>1244 (95%)</td>
+                            <td>9.80</td><td>6.67</td><td>377.99</td><td>75.15</td>
                         </tr>
                         <tr>
-                            <td>DiffRect (MICCAI'24)</td>
-                            <td>136 (10%)</td>
-                            <td>0</td>
-                            <td>1176 (90%)</td>
-                            <td class="second-best">88.14</td>
-                            <td class="second-best">79.65</td>
-                            <td>5.72</td>
-                            <td>1.60</td>
+                            <td>ABD(BCP) (CVPR'24)</td><td>68 (5%)</td><td>0</td><td>1244 (95%)</td>
+                            <td>21.84</td><td>14.83</td><td class="best">10.26</td><td class="best">1.87</td>
                         </tr>
                         <tr>
-                            <td>CGS (TMI'25)</td>
-                            <td>136 (10%)</td>
-                            <td>0</td>
-                            <td>1176 (90%)</td>
-                            <td>87.76</td>
-                            <td>78.95</td>
-                            <td>3.82</td>
-                            <td>1.31</td>
+                            <td>DiffRect (MICCAI'24)</td><td>68 (5%)</td><td>0</td><td>1244 (95%)</td>
+                            <td class="best">63.74</td><td class="best">53.51</td><td>19.29</td><td>6.13</td>
+                        </tr>
+                        <tr>
+                            <td>CGS (TMI'25)</td><td>68 (5%)</td><td>0</td><td>1244 (95%)</td>
+                            <td>29.23</td><td>18.93</td><td>19.20</td><td>6.23</td>
                         </tr>
                         <tr class="highlight-row">
-                            <td><strong>SRA-Seg (Ours)</strong></td>
-                            <td>136 (10%)</td>
-                            <td>0</td>
-                            <td>1176 (90%)</td>
-                            <td class="best">89.34</td>
-                            <td class="best">81.24</td>
-                            <td class="second-best">3.03</td>
-                            <td class="second-best">1.14</td>
+                            <td><strong>SRA-Seg (Ours)</strong></td><td>68 (5%)</td><td>0</td><td>1244 (95%)</td>
+                            <td class="second-best">60.02</td><td class="second-best">46.52</td><td>19.95</td><td>5.83</td>
+                        </tr>
+
+                        <tr class="split-row"><td colspan="8">10% labeled</td></tr>
+                        <tr>
+                            <td>UNet</td><td>136</td><td>0</td><td>0</td>
+                            <td>79.41</td><td>68.11</td><td>9.35</td><td>2.70</td>
+                        </tr>
+                        <tr>
+                            <td>BCP (CVPR'23)</td><td>136 (10%)</td><td>1176 (90%)</td><td>0</td>
+                            <td>88.84</td><td>80.62</td><td>3.98</td><td>1.17</td>
+                        </tr>
+                        <tr>
+                            <td>SRA-Seg (Ours)</td><td>136 (10%)</td><td>1176 (90%)</td><td>0</td>
+                            <td>88.99</td><td>81.00</td><td>2.82</td><td>0.83</td>
+                        </tr>
+                        <tr>
+                            <td>BCP (CVPR'23)</td><td>136 (10%)</td><td>0</td><td>1176 (90%)</td>
+                            <td>87.46</td><td>78.53</td><td>5.30</td><td>1.62</td>
+                        </tr>
+                        <tr>
+                            <td>CrossMatch (JBHI'25)</td><td>136 (10%)</td><td>0</td><td>1176 (90%)</td>
+                            <td>85.26</td><td>76.28</td><td>3.72</td><td class="second-best">1.00</td>
+                        </tr>
+                        <tr>
+                            <td>ABD(BCP) (CVPR'24)</td><td>136 (10%)</td><td>0</td><td>1176 (90%)</td>
+                            <td>87.03</td><td>77.88</td><td class="second-best">3.19</td><td class="best">0.85</td>
+                        </tr>
+                        <tr>
+                            <td>DiffRect (MICCAI'24)</td><td>136 (10%)</td><td>0</td><td>1176 (90%)</td>
+                            <td class="second-best">88.14</td><td class="second-best">79.65</td><td>5.72</td><td>1.60</td>
+                        </tr>
+                        <tr>
+                            <td>CGS (TMI'25)</td><td>136 (10%)</td><td>0</td><td>1176 (90%)</td>
+                            <td>87.76</td><td>78.95</td><td>3.82</td><td>1.31</td>
+                        </tr>
+                        <tr class="highlight-row">
+                            <td><strong>SRA-Seg (Ours)</strong></td><td>136 (10%)</td><td>0</td><td>1176 (90%)</td>
+                            <td class="best">89.34</td><td class="best">81.24</td><td class="best">3.03</td><td>1.14</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            
+            <p class="table-legend">
+                <span class="best">Bold</span> is best and <span class="second-best">underline</span> is second best, ranked within
+                the synthetic-unlabeled block of each split. The real-unlabeled rows are reference upper bounds and are not ranked.
+            </p>
+
             <!-- FIVES Results -->
             <h3 class="subsection-title">FIVES Dataset (Fundus Images)</h3>
             <div class="table-wrapper">
                 <table class="results-table">
                     <thead>
                         <tr>
-                            <th>Method</th>
-                            <th>Labeled</th>
-                            <th>Real Unlabeled</th>
-                            <th>Synthetic</th>
-                            <th>DICE ↑</th>
-                            <th>Jaccard ↑</th>
-                            <th>95HD ↓</th>
-                            <th>ASD ↓</th>
+                            <th scope="col">Method</th>
+                            <th scope="col">Labeled</th>
+                            <th scope="col">Real Unlabeled</th>
+                            <th scope="col">Synthetic</th>
+                            <th scope="col">DICE &uarr;</th>
+                            <th scope="col">Jaccard &uarr;</th>
+                            <th scope="col">95HD &darr;</th>
+                            <th scope="col">ASD &darr;</th>
                         </tr>
                     </thead>
                     <tbody>
+                        <tr class="split-row"><td colspan="8">5% labeled</td></tr>
                         <tr>
-                            <td>UNet</td>
-                            <td>56</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>59.36</td>
-                            <td>43.71</td>
-                            <td>13.69</td>
-                            <td>2.46</td>
+                            <td>UNet</td><td>28</td><td>0</td><td>0</td>
+                            <td>49.50</td><td>34.38</td><td>18.03</td><td>3.55</td>
                         </tr>
                         <tr>
-                            <td>BCP (CVPR'23)</td>
-                            <td>56 (10%)</td>
-                            <td>504 (90%)</td>
-                            <td>0</td>
-                            <td>81.87</td>
-                            <td>69.35</td>
-                            <td>1.85</td>
-                            <td>0.15</td>
+                            <td>BCP (CVPR'23)</td><td>28 (5%)</td><td>532 (95%)</td><td>0</td>
+                            <td>80.39</td><td>67.29</td><td>2.09</td><td>0.15</td>
                         </tr>
                         <tr>
-                            <td>BCP (CVPR'23)</td>
-                            <td>56 (10%)</td>
-                            <td>0</td>
-                            <td>504 (90%)</td>
-                            <td>83.86</td>
-                            <td>72.25</td>
-                            <td>1.51</td>
-                            <td>0.17</td>
+                            <td>SRA-Seg (Ours)</td><td>28 (5%)</td><td>532 (95%)</td><td>0</td>
+                            <td>81.23</td><td>68.46</td><td>2.07</td><td>0.13</td>
                         </tr>
                         <tr>
-                            <td>CrossMatch (JBHI'25)</td>
-                            <td>56 (10%)</td>
-                            <td>0</td>
-                            <td>504 (90%)</td>
-                            <td>60.68</td>
-                            <td>43.73</td>
-                            <td>3.69</td>
-                            <td class="best">0.02</td>
+                            <td>BCP (CVPR'23)</td><td>28 (5%)</td><td>0</td><td>532 (95%)</td>
+                            <td>82.34</td><td>70.05</td><td>1.76</td><td>0.17</td>
                         </tr>
                         <tr>
-                            <td>DiffRect (MICCAI'24)</td>
-                            <td>56 (10%)</td>
-                            <td>0</td>
-                            <td>504 (90%)</td>
-                            <td class="second-best">84.22</td>
-                            <td class="second-best">72.79</td>
-                            <td class="second-best">1.41</td>
-                            <td class="second-best">0.16</td>
+                            <td>CrossMatch (JBHI'25)</td><td>28 (5%)</td><td>0</td><td>532 (95%)</td>
+                            <td>62.24</td><td>45.47</td><td>3.95</td><td class="best">0.03</td>
                         </tr>
                         <tr>
-                            <td>CGS (TMI'25)</td>
-                            <td>56 (10%)</td>
-                            <td>0</td>
-                            <td>504 (90%)</td>
-                            <td>83.55</td>
-                            <td>71.80</td>
-                            <td>1.59</td>
-                            <td>0.17</td>
+                            <td>ABD(BCP) (CVPR'24)</td><td>28 (5%)</td><td>0</td><td>532 (95%)</td>
+                            <td>70.61</td><td>54.00</td><td>3.28</td><td class="second-best">0.14</td>
+                        </tr>
+                        <tr>
+                            <td>DiffRect (MICCAI'24)</td><td>28 (5%)</td><td>0</td><td>532 (95%)</td>
+                            <td class="second-best">82.79</td><td class="second-best">70.69</td><td class="best">1.56</td><td>0.23</td>
+                        </tr>
+                        <tr>
+                            <td>CGS (TMI'25)</td><td>28 (5%)</td><td>0</td><td>532 (95%)</td>
+                            <td>81.14</td><td>68.38</td><td>1.84</td><td>0.20</td>
                         </tr>
                         <tr class="highlight-row">
-                            <td><strong>SRA-Seg (Ours)</strong></td>
-                            <td>56 (10%)</td>
-                            <td>0</td>
-                            <td>504 (90%)</td>
-                            <td class="best">84.42</td>
-                            <td class="best">73.08</td>
-                            <td class="best">1.34</td>
-                            <td class="second-best">0.16</td>
+                            <td><strong>SRA-Seg (Ours)</strong></td><td>28 (5%)</td><td>0</td><td>532 (95%)</td>
+                            <td class="best">82.85</td><td class="best">70.78</td><td class="second-best">1.72</td><td>0.15</td>
+                        </tr>
+
+                        <tr class="split-row"><td colspan="8">10% labeled</td></tr>
+                        <tr>
+                            <td>UNet</td><td>56</td><td>0</td><td>0</td>
+                            <td>59.36</td><td>43.71</td><td>13.69</td><td>2.46</td>
+                        </tr>
+                        <tr>
+                            <td>BCP (CVPR'23)</td><td>56 (10%)</td><td>504 (90%)</td><td>0</td>
+                            <td>81.87</td><td>69.35</td><td>1.85</td><td>0.15</td>
+                        </tr>
+                        <tr>
+                            <td>SRA-Seg (Ours)</td><td>56 (10%)</td><td>504 (90%)</td><td>0</td>
+                            <td>82.58</td><td>70.38</td><td>1.80</td><td>0.16</td>
+                        </tr>
+                        <tr>
+                            <td>BCP (CVPR'23)</td><td>56 (10%)</td><td>0</td><td>504 (90%)</td>
+                            <td>83.86</td><td>72.25</td><td>1.51</td><td>0.17</td>
+                        </tr>
+                        <tr>
+                            <td>CrossMatch (JBHI'25)</td><td>56 (10%)</td><td>0</td><td>504 (90%)</td>
+                            <td>60.68</td><td>43.73</td><td>3.69</td><td class="best">0.02</td>
+                        </tr>
+                        <tr>
+                            <td>ABD(BCP) (CVPR'24)</td><td>56 (10%)</td><td>0</td><td>504 (90%)</td>
+                            <td>63.53</td><td>46.76</td><td>6.37</td><td>2.46</td>
+                        </tr>
+                        <tr>
+                            <td>DiffRect (MICCAI'24)</td><td>56 (10%)</td><td>0</td><td>504 (90%)</td>
+                            <td class="second-best">84.22</td><td class="second-best">72.79</td><td class="second-best">1.41</td><td class="second-best">0.16</td>
+                        </tr>
+                        <tr>
+                            <td>CGS (TMI'25)</td><td>56 (10%)</td><td>0</td><td>504 (90%)</td>
+                            <td>83.55</td><td>71.80</td><td>1.59</td><td>0.17</td>
+                        </tr>
+                        <tr class="highlight-row">
+                            <td><strong>SRA-Seg (Ours)</strong></td><td>56 (10%)</td><td>0</td><td>504 (90%)</td>
+                            <td class="best">84.42</td><td class="best">73.08</td><td class="best">1.34</td><td class="second-best">0.16</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            
+            <p class="table-legend">
+                <span class="best">Bold</span> is best and <span class="second-best">underline</span> is second best, ranked within
+                the synthetic-unlabeled block of each split. The real-unlabeled rows are reference upper bounds and are not ranked.
+            </p>
+
             <!-- Qualitative Results -->
             <h3 class="subsection-title">Qualitative Results</h3>
-            
+
             <!-- ACDC Qualitative -->
-            <p style="margin-bottom: 16px;"><strong>ACDC Dataset</strong> (10% labeled, 90% synthetic). Incorrectly segmented pixels are highlighted in red.</p>
+            <p style="margin-bottom: 16px;"><strong>ACDC Dataset</strong> (10% labeled, 90% synthetic). Incorrectly segmented pixels are highlighted in red. Click any image to enlarge.</p>
             <div class="table-wrapper">
-                <table class="results-table" style="text-align: center;">
+                <table class="results-table qual-table">
                     <thead>
                         <tr>
-                            <th>Image</th>
-                            <th>UNet</th>
-                            <th>BCP</th>
-                            <th>CrossMatch</th>
-                            <th>ABD</th>
-                            <th>DiffRect</th>
-                            <th>CGS</th>
-                            <th>SRA-Seg</th>
-                            <th>GT</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">UNet</th>
+                            <th scope="col">BCP</th>
+                            <th scope="col">CrossMatch</th>
+                            <th scope="col">ABD</th>
+                            <th scope="col">DiffRect</th>
+                            <th scope="col">CGS</th>
+                            <th scope="col">SRA-Seg</th>
+                            <th scope="col">GT</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><img src="figures/acdc_quantitative/original_images/image_A.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/acdc_quantitative/unet_gt_10/mask_image_A_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/acdc_quantitative/bcp_gt_10/mask_image_A_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/acdc_quantitative/crossmatch_gt_10/image_A_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/acdc_quantitative/abd_gt_10/mask_image_A_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/acdc_quantitative/diffrect_gt_10/image_A_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/acdc_quantitative/cgs_gt_10/image_A_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/acdc_quantitative/synbcp_gt_10/mask_image_A_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/acdc_quantitative/original_gt/label_A.png" style="width:60px; border-radius:4px;"></td>
+                            <td><img class="qual" loading="lazy" src="figures/acdc_quantitative/original_images/image_A.png" alt="ACDC case A, input image" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/acdc_quantitative/unet_gt_10/mask_image_A_colored_p.png" alt="ACDC case A, UNet prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/acdc_quantitative/bcp_gt_10/mask_image_A_colored_p.png" alt="ACDC case A, BCP prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/acdc_quantitative/crossmatch_gt_10/image_A_colored_p.png" alt="ACDC case A, CrossMatch prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/acdc_quantitative/abd_gt_10/mask_image_A_colored_p.png" alt="ACDC case A, ABD prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/acdc_quantitative/diffrect_gt_10/image_A_colored_p.png" alt="ACDC case A, DiffRect prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/acdc_quantitative/cgs_gt_10/image_A_colored_p.png" alt="ACDC case A, CGS prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/acdc_quantitative/synbcp_gt_10/mask_image_A_colored_p.png" alt="ACDC case A, SRA-Seg prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/acdc_quantitative/original_gt/label_A.png" alt="ACDC case A, ground truth" onclick="openModal(this)"></td>
                         </tr>
                         <tr>
-                            <td><img src="figures/acdc_quantitative/original_images/image_B.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/acdc_quantitative/unet_gt_10/mask_image_B_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/acdc_quantitative/bcp_gt_10/mask_image_B_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/acdc_quantitative/crossmatch_gt_10/image_B_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/acdc_quantitative/abd_gt_10/mask_image_B_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/acdc_quantitative/diffrect_gt_10/image_B_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/acdc_quantitative/cgs_gt_10/image_B_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/acdc_quantitative/synbcp_gt_10/mask_image_B_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/acdc_quantitative/original_gt/label_B.png" style="width:60px; border-radius:4px;"></td>
+                            <td><img class="qual" loading="lazy" src="figures/acdc_quantitative/original_images/image_B.png" alt="ACDC case B, input image" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/acdc_quantitative/unet_gt_10/mask_image_B_colored_p.png" alt="ACDC case B, UNet prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/acdc_quantitative/bcp_gt_10/mask_image_B_colored_p.png" alt="ACDC case B, BCP prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/acdc_quantitative/crossmatch_gt_10/image_B_colored_p.png" alt="ACDC case B, CrossMatch prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/acdc_quantitative/abd_gt_10/mask_image_B_colored_p.png" alt="ACDC case B, ABD prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/acdc_quantitative/diffrect_gt_10/image_B_colored_p.png" alt="ACDC case B, DiffRect prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/acdc_quantitative/cgs_gt_10/image_B_colored_p.png" alt="ACDC case B, CGS prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/acdc_quantitative/synbcp_gt_10/mask_image_B_colored_p.png" alt="ACDC case B, SRA-Seg prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/acdc_quantitative/original_gt/label_B.png" alt="ACDC case B, ground truth" onclick="openModal(this)"></td>
                         </tr>
                         <tr>
-                            <td><img src="figures/acdc_quantitative/original_images/image_C.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/acdc_quantitative/unet_gt_10/mask_image_C_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/acdc_quantitative/bcp_gt_10/mask_image_C_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/acdc_quantitative/crossmatch_gt_10/image_C_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/acdc_quantitative/abd_gt_10/mask_image_C_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/acdc_quantitative/diffrect_gt_10/image_C_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/acdc_quantitative/cgs_gt_10/image_C_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/acdc_quantitative/synbcp_gt_10/mask_image_C_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/acdc_quantitative/original_gt/label_C.png" style="width:60px; border-radius:4px;"></td>
+                            <td><img class="qual" loading="lazy" src="figures/acdc_quantitative/original_images/image_C.png" alt="ACDC case C, input image" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/acdc_quantitative/unet_gt_10/mask_image_C_colored_p.png" alt="ACDC case C, UNet prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/acdc_quantitative/bcp_gt_10/mask_image_C_colored_p.png" alt="ACDC case C, BCP prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/acdc_quantitative/crossmatch_gt_10/image_C_colored_p.png" alt="ACDC case C, CrossMatch prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/acdc_quantitative/abd_gt_10/mask_image_C_colored_p.png" alt="ACDC case C, ABD prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/acdc_quantitative/diffrect_gt_10/image_C_colored_p.png" alt="ACDC case C, DiffRect prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/acdc_quantitative/cgs_gt_10/image_C_colored_p.png" alt="ACDC case C, CGS prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/acdc_quantitative/synbcp_gt_10/mask_image_C_colored_p.png" alt="ACDC case C, SRA-Seg prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/acdc_quantitative/original_gt/label_C.png" alt="ACDC case C, ground truth" onclick="openModal(this)"></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            
+
             <!-- FIVES Qualitative -->
-            <p style="margin: 32px 0 16px;"><strong>FIVES Dataset</strong> (10% labeled, 90% synthetic). Incorrectly segmented pixels are highlighted in red.</p>
+            <p style="margin: 32px 0 16px;"><strong>FIVES Dataset</strong> (10% labeled, 90% synthetic). Incorrectly segmented pixels are highlighted in red. Click any image to enlarge.</p>
             <div class="table-wrapper">
-                <table class="results-table" style="text-align: center;">
+                <table class="results-table qual-table">
                     <thead>
                         <tr>
-                            <th>Image</th>
-                            <th>UNet</th>
-                            <th>BCP</th>
-                            <th>CrossMatch</th>
-                            <th>ABD</th>
-                            <th>DiffRect</th>
-                            <th>CGS</th>
-                            <th>SRA-Seg</th>
-                            <th>GT</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">UNet</th>
+                            <th scope="col">BCP</th>
+                            <th scope="col">CrossMatch</th>
+                            <th scope="col">ABD</th>
+                            <th scope="col">DiffRect</th>
+                            <th scope="col">CGS</th>
+                            <th scope="col">SRA-Seg</th>
+                            <th scope="col">GT</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><img src="figures/fives_quantitative/original_images/image_1.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/fives_quantitative/unet_gt_10/image_1_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/fives_quantitative/bcp_gt_10/image_1_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/fives_quantitative/crossmatch_gt_10/image_1_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/fives_quantitative/abd_gt_10/image_1_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/fives_quantitative/diffrect_gt_10/image_1_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/fives_quantitative/cgs_gt_10/image_1_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/fives_quantitative/synbcp_gt_10/image_1_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/fives_quantitative/original_gt/gt_1.png" style="width:60px; border-radius:4px;"></td>
+                            <td><img class="qual" loading="lazy" src="figures/fives_quantitative/original_images/image_1.png" alt="FIVES case 1, input image" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/fives_quantitative/unet_gt_10/image_1_colored_p.png" alt="FIVES case 1, UNet prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/fives_quantitative/bcp_gt_10/image_1_colored_p.png" alt="FIVES case 1, BCP prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/fives_quantitative/crossmatch_gt_10/image_1_colored_p.png" alt="FIVES case 1, CrossMatch prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/fives_quantitative/abd_gt_10/image_1_colored_p.png" alt="FIVES case 1, ABD prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/fives_quantitative/diffrect_gt_10/image_1_colored_p.png" alt="FIVES case 1, DiffRect prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/fives_quantitative/cgs_gt_10/image_1_colored_p.png" alt="FIVES case 1, CGS prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/fives_quantitative/synbcp_gt_10/image_1_colored_p.png" alt="FIVES case 1, SRA-Seg prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/fives_quantitative/original_gt/gt_1.png" alt="FIVES case 1, ground truth" onclick="openModal(this)"></td>
                         </tr>
                         <tr>
-                            <td><img src="figures/fives_quantitative/original_images/image_2.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/fives_quantitative/unet_gt_10/image_2_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/fives_quantitative/bcp_gt_10/image_2_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/fives_quantitative/crossmatch_gt_10/image_2_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/fives_quantitative/abd_gt_10/image_2_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/fives_quantitative/diffrect_gt_10/image_2_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/fives_quantitative/cgs_gt_10/image_2_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/fives_quantitative/synbcp_gt_10/image_2_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/fives_quantitative/original_gt/gt_2.png" style="width:60px; border-radius:4px;"></td>
+                            <td><img class="qual" loading="lazy" src="figures/fives_quantitative/original_images/image_2.png" alt="FIVES case 2, input image" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/fives_quantitative/unet_gt_10/image_2_colored_p.png" alt="FIVES case 2, UNet prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/fives_quantitative/bcp_gt_10/image_2_colored_p.png" alt="FIVES case 2, BCP prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/fives_quantitative/crossmatch_gt_10/image_2_colored_p.png" alt="FIVES case 2, CrossMatch prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/fives_quantitative/abd_gt_10/image_2_colored_p.png" alt="FIVES case 2, ABD prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/fives_quantitative/diffrect_gt_10/image_2_colored_p.png" alt="FIVES case 2, DiffRect prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/fives_quantitative/cgs_gt_10/image_2_colored_p.png" alt="FIVES case 2, CGS prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/fives_quantitative/synbcp_gt_10/image_2_colored_p.png" alt="FIVES case 2, SRA-Seg prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/fives_quantitative/original_gt/gt_2.png" alt="FIVES case 2, ground truth" onclick="openModal(this)"></td>
                         </tr>
                         <tr>
-                            <td><img src="figures/fives_quantitative/original_images/image_3.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/fives_quantitative/unet_gt_10/image_3_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/fives_quantitative/bcp_gt_10/image_3_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/fives_quantitative/crossmatch_gt_10/image_3_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/fives_quantitative/abd_gt_10/image_3_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/fives_quantitative/diffrect_gt_10/image_3_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/fives_quantitative/cgs_gt_10/image_3_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/fives_quantitative/synbcp_gt_10/image_3_colored_p.png" style="width:60px; border-radius:4px;"></td>
-                            <td><img src="figures/fives_quantitative/original_gt/gt_3.png" style="width:60px; border-radius:4px;"></td>
+                            <td><img class="qual" loading="lazy" src="figures/fives_quantitative/original_images/image_3.png" alt="FIVES case 3, input image" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/fives_quantitative/unet_gt_10/image_3_colored_p.png" alt="FIVES case 3, UNet prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/fives_quantitative/bcp_gt_10/image_3_colored_p.png" alt="FIVES case 3, BCP prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/fives_quantitative/crossmatch_gt_10/image_3_colored_p.png" alt="FIVES case 3, CrossMatch prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/fives_quantitative/abd_gt_10/image_3_colored_p.png" alt="FIVES case 3, ABD prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/fives_quantitative/diffrect_gt_10/image_3_colored_p.png" alt="FIVES case 3, DiffRect prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/fives_quantitative/cgs_gt_10/image_3_colored_p.png" alt="FIVES case 3, CGS prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/fives_quantitative/synbcp_gt_10/image_3_colored_p.png" alt="FIVES case 3, SRA-Seg prediction" onclick="openModal(this)"></td>
+                            <td><img class="qual" loading="lazy" src="figures/fives_quantitative/original_gt/gt_3.png" alt="FIVES case 3, ground truth" onclick="openModal(this)"></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            
+
             <!-- Dice Comparison Figure -->
             <div class="figure">
-                <img src="figures/dice-comp.png" alt="Dice Score Comparison" onclick="openModal(this)">
+                <img src="figures/dice-comp.png" alt="Real-image usage versus Dice score for BCP and SRA-Seg" onclick="openModal(this)">
                 <p class="figure-caption">
-                    <strong>Figure:</strong> Comparison of real-image usage (bar height) and resulting Dice scores (red markers) 
+                    <strong>Figure:</strong> Comparison of real-image usage (bar height) and resulting Dice scores (red markers)
                     for BCP versus SRA-Seg on ACDC and FIVES datasets. SRA-Seg achieves higher Dice with only 10% real data.
                 </p>
             </div>
-            
+
             <!-- FID Scores Figure -->
             <div class="figure">
-                <img src="figures/fid.png" alt="FID Scores" onclick="openModal(this)">
+                <img src="figures/fid.png" alt="FID scores for synthetic images at the 5% and 10% splits" onclick="openModal(this)">
                 <p class="figure-caption">
-                    <strong>Figure:</strong> FID scores comparing synthetic and real images across 5% and 10% data splits. 
+                    <strong>Figure:</strong> FID scores comparing synthetic and real images across 5% and 10% data splits.
                     Lower FID indicates better synthetic data quality. FIVES achieves consistently lower FID scores.
                 </p>
             </div>
         </section>
-        
+
         <!-- Ablation -->
         <section class="section">
             <h2 class="section-title">Ablation Study</h2>
-            <p>Each component of SRA-Seg contributes to the final performance:</p>
-            
+            <p>All configurations use 10% real labeled and 90% synthetic unlabeled data. The first row is the BCP baseline.</p>
+
             <div class="table-wrapper">
                 <table class="results-table">
                     <thead>
                         <tr>
-                            <th>Soft-Mix</th>
-                            <th>Soft-Loss</th>
-                            <th>SA-Loss</th>
-                            <th>ACDC DICE ↑</th>
-                            <th>FIVES DICE ↑</th>
+                            <th scope="col">Soft-mix</th>
+                            <th scope="col">Soft-loss</th>
+                            <th scope="col">SA-loss</th>
+                            <th scope="col">ACDC DICE &uarr;</th>
+                            <th scope="col">ACDC Jaccard &uarr;</th>
+                            <th scope="col">ACDC 95HD &darr;</th>
+                            <th scope="col">ACDC ASD &darr;</th>
+                            <th scope="col">FIVES DICE &uarr;</th>
+                            <th scope="col">FIVES Jaccard &uarr;</th>
+                            <th scope="col">FIVES 95HD &darr;</th>
+                            <th scope="col">FIVES ASD &darr;</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><span class="cross">✗</span></td>
-                            <td><span class="cross">✗</span></td>
-                            <td><span class="cross">✗</span></td>
-                            <td>87.46</td>
-                            <td>83.86</td>
+                            <td><span class="cross">&#10007;</span></td>
+                            <td><span class="cross">&#10007;</span></td>
+                            <td><span class="cross">&#10007;</span></td>
+                            <td>87.46</td><td>78.53</td><td>5.30</td><td>1.62</td>
+                            <td>83.86</td><td>72.25</td><td>1.51</td><td>0.17</td>
                         </tr>
                         <tr>
-                            <td><span class="check">✓</span></td>
-                            <td><span class="cross">✗</span></td>
-                            <td><span class="cross">✗</span></td>
-                            <td>88.16</td>
-                            <td>84.08</td>
+                            <td><span class="cross">&#10007;</span></td>
+                            <td><span class="cross">&#10007;</span></td>
+                            <td><span class="check">&#10003;</span></td>
+                            <td>87.60</td><td>78.66</td><td>9.66</td><td>2.75</td>
+                            <td>84.02</td><td>72.50</td><td>1.51</td><td>0.16</td>
                         </tr>
                         <tr>
-                            <td><span class="check">✓</span></td>
-                            <td><span class="check">✓</span></td>
-                            <td><span class="cross">✗</span></td>
-                            <td>88.96</td>
-                            <td>84.16</td>
+                            <td><span class="check">&#10003;</span></td>
+                            <td><span class="cross">&#10007;</span></td>
+                            <td><span class="cross">&#10007;</span></td>
+                            <td>88.16</td><td>79.42</td><td>4.80</td><td>1.50</td>
+                            <td>84.08</td><td>72.58</td><td>1.54</td><td>0.17</td>
+                        </tr>
+                        <tr>
+                            <td><span class="check">&#10003;</span></td>
+                            <td><span class="cross">&#10007;</span></td>
+                            <td><span class="check">&#10003;</span></td>
+                            <td>88.09</td><td>79.36</td><td class="best">2.14</td><td class="best">0.78</td>
+                            <td>84.25</td><td>72.83</td><td>1.44</td><td>0.16</td>
+                        </tr>
+                        <tr>
+                            <td><span class="check">&#10003;</span></td>
+                            <td><span class="check">&#10003;</span></td>
+                            <td><span class="cross">&#10007;</span></td>
+                            <td>88.96</td><td>80.69</td><td>2.87</td><td>1.01</td>
+                            <td>84.16</td><td>72.71</td><td>1.51</td><td>0.16</td>
                         </tr>
                         <tr class="highlight-row">
-                            <td><span class="check">✓</span></td>
-                            <td><span class="check">✓</span></td>
-                            <td><span class="check">✓</span></td>
-                            <td class="best">89.33</td>
-                            <td class="best">84.42</td>
+                            <td><span class="check">&#10003;</span></td>
+                            <td><span class="check">&#10003;</span></td>
+                            <td><span class="check">&#10003;</span></td>
+                            <td class="best">89.33</td><td class="best">81.25</td><td>2.94</td><td>0.85</td>
+                            <td class="best">84.42</td><td class="best">73.08</td><td class="best">1.34</td><td class="best">0.16</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
+            <p class="table-legend">
+                <span class="best">Bold</span> is best per metric. Soft-mix and soft-loss together give the largest Dice gain;
+                SA-loss adds the final improvement and is what closes the distribution gap shown in the KDE plots.
+            </p>
         </section>
-        
+
         <!-- BibTeX -->
         <section class="section">
             <h2 class="section-title">BibTeX</h2>
             <div class="bibtex-container">
-                <button class="copy-btn" onclick="copyBibtex()">
-                    <i class="fas fa-copy"></i> Copy
+                <button class="copy-btn" type="button" onclick="copyBibtex()">
+                    <i class="fas fa-copy" aria-hidden="true"></i> Copy
                 </button>
-                <pre id="bibtex">@article{aranya2025sraseg,
-  title={SRA-Seg: Synthetic to Real Alignment for Semi-Supervised Medical Image Segmentation},
-  author={Aranya, OFM Riaz Rahman and Desai, Kevin},
-  journal={arXiv preprint},
-  year={2025}
+                <pre id="bibtex">@InProceedings{aranya2027sraseg,
+  author    = {Aranya, OFM Riaz Rahman and Desai, Kevin},
+  title     = {SRA-Seg: Synthetic to Real Alignment for Semi-Supervised Medical Image Segmentation},
+  booktitle = {Pattern Recognition (ICPR)},
+  publisher = {Springer Nature Switzerland},
+  address   = {Cham},
+  pages     = {698--715},
+  year      = {2027},
+  doi       = {10.1007/978-3-032-31335-5_47},
+  isbn      = {978-3-032-31335-5}
 }</pre>
             </div>
         </section>
-        
+
         <!-- Acknowledgments -->
         <section class="section">
             <h2 class="section-title">Acknowledgments</h2>
             <p>
-                This work builds upon <a href="https://github.com/DeepMed-Lab-ECNU/BCP" target="_blank">BCP</a> 
-                and utilizes <a href="https://github.com/NVlabs/stylegan2-ada-pytorch" target="_blank">StyleGAN2-ADA</a> 
-                for synthetic data generation and <a href="https://github.com/facebookresearch/dinov2" target="_blank">DINOv2</a> 
+                This work builds upon <a href="https://github.com/DeepMed-Lab-ECNU/BCP" target="_blank" rel="noopener">BCP</a>
+                and utilizes <a href="https://github.com/NVlabs/stylegan2-ada-pytorch" target="_blank" rel="noopener">StyleGAN2-ADA</a>
+                for synthetic data generation and <a href="https://github.com/facebookresearch/dinov2" target="_blank" rel="noopener">DINOv2</a>
                 for feature extraction.
             </p>
         </section>
     </div>
-    
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <p>
-                <a href="https://utsa-virlab.github.io/">UTSA VIRLab</a> · 
-                <a href="https://utsa.edu/">University of Texas at San Antonio</a>
+                <a href="https://utsa-virlab.github.io/">UTSA VIRLab</a> &middot;
+                <a href="https://utsa.edu/">The University of Texas at San Antonio</a>
             </p>
             <p style="margin-top: 8px;">
-                Template adapted from <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a>
+                Template adapted from <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener">Academic Project Page Template</a>
             </p>
         </div>
     </footer>
-    
+
     <!-- Image Modal -->
-    <div id="imageModal" class="modal" onclick="closeModal()">
-        <span class="modal-close">&times;</span>
+    <div id="imageModal" class="modal" role="dialog" aria-modal="true" aria-label="Enlarged figure" onclick="closeModal()">
+        <button class="modal-close" type="button" aria-label="Close" onclick="closeModal()">&times;</button>
         <img id="modalImage" src="" alt="">
     </div>
-    
+
     <script>
-        // Copy BibTeX
+        // Copy BibTeX. navigator.clipboard is undefined on file:// and plain
+        // http, so fall back to a hidden textarea and report failure.
         function copyBibtex() {
-            const bibtex = document.getElementById('bibtex').textContent;
-            navigator.clipboard.writeText(bibtex).then(() => {
+            const text = document.getElementById('bibtex').textContent;
+            const done = () => {
                 const btn = document.querySelector('.copy-btn');
                 btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
                 btn.classList.add('copied');
@@ -1109,21 +1231,40 @@
                     btn.innerHTML = '<i class="fas fa-copy"></i> Copy';
                     btn.classList.remove('copied');
                 }, 2000);
-            });
+            };
+            const fallback = () => {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                try { document.execCommand('copy'); done(); }
+                catch (e) { window.prompt('Copy the citation:', text); }
+                document.body.removeChild(ta);
+            };
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(done).catch(fallback);
+            } else {
+                fallback();
+            }
         }
-        
-        // Image Modal
+
+        // Image modal
         function openModal(img) {
             const modal = document.getElementById('imageModal');
             const modalImg = document.getElementById('modalImage');
-            modal.style.display = 'block';
             modalImg.src = img.src;
+            modalImg.alt = img.alt || '';
+            modal.classList.add('open');
+            document.body.classList.add('modal-open');
         }
-        
+
         function closeModal() {
-            document.getElementById('imageModal').style.display = 'none';
+            document.getElementById('imageModal').classList.remove('open');
+            document.body.classList.remove('modal-open');
         }
-        
+
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeModal();
         });
